@@ -9,14 +9,14 @@ from PyQt5.QtWidgets import (
     QToolButton, QVBoxLayout, QWidget,
 )
 
-from examples import DEMO_LEFT, DEMO_RIGHT
-from branding import APP_NAME, DISPLAY_NAME, VERSION
-from icons import app_icon, icon
-from preferences import load_settings
-from presenter import SessionPresenter
-from session_view import SessionView
-from styles import DARK, LIGHT, qt_palette, stylesheet
-from widgets import tool_button
+from .branding import APP_NAME, DISPLAY_NAME, VERSION
+from .examples import DEMO_LEFT, DEMO_RIGHT
+from .icons import app_icon, icon
+from .preferences import load_settings
+from .presenter import SessionPresenter
+from .session_view import SessionView
+from .styles import DARK, LIGHT, qt_palette, stylesheet
+from .widgets import tool_button
 
 class MainWindow(QMainWindow):
     """A shell around independent comparison sessions, not a document editor."""

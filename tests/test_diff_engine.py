@@ -1,10 +1,7 @@
-import sys
 import unittest
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from diff_engine import (DiffOptions, Span, apply_change, compare_texts,
+from easytextdiff.diff_engine import (DiffOptions, Span, apply_change, compare_texts,
                          export_unified, split_lines)
 
 

@@ -1,20 +1,17 @@
 """Native source editing must remain intact while diff decorations change."""
 
 import os
-from pathlib import Path
-import sys
 import unittest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtTest import QSignalSpy, QTest
 from PyQt5.QtWidgets import QApplication
 
-from diff_engine import DiffOptions, compare_texts
-from editor import CodeEditor
+from easytextdiff.diff_engine import DiffOptions, compare_texts
+from easytextdiff.editor import CodeEditor
 
 
 class EditorTests(unittest.TestCase):

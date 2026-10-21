@@ -1,6 +1,6 @@
 """Portable HTML comparison reports containing only the user's selected data."""
 from html import escape
-from branding import APP_NAME
+from .branding import APP_NAME
 
 
 def _cell(text, spans):

@@ -1,7 +1,7 @@
 """Application preferences and one-time migration from the former identity."""
 from PyQt5.QtCore import QSettings
 
-from branding import APP_NAME
+from .branding import APP_NAME
 
 
 def load_settings(destination=None, legacy=None):

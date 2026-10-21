@@ -7,8 +7,8 @@ from PyQt5.QtWidgets import (
     QToolButton, QVBoxLayout, QWidget,
 )
 
-from editor import CodeEditor
-from icons import icon
+from .editor import CodeEditor
+from .icons import icon
 
 
 def tool_button(name, tooltip, callback=None, parent=None):

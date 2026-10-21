@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 import tempfile
 
-from models import DocumentModel, Newline
+from .models import DocumentModel, Newline
 
 
 DEFAULT_MAX_BYTES = 4 * 1024 * 1024

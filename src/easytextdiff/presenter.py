@@ -4,13 +4,13 @@ from pathlib import Path
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QApplication
 
-from dialogs import QtDialogs
-from diff_engine import DiffOptions, apply_change, export_unified
-from file_service import ExternalModificationError, FileServiceError, read_document, save_document
-from highlighting import detect_language
-from models import ComparisonModel, DocumentModel
-from reports import html_report
-from tasks import CompareCoordinator
+from .dialogs import QtDialogs
+from .diff_engine import DiffOptions, apply_change, export_unified
+from .file_service import ExternalModificationError, FileServiceError, read_document, save_document
+from .highlighting import detect_language
+from .models import ComparisonModel, DocumentModel
+from .reports import html_report
+from .tasks import CompareCoordinator
 
 
 class SessionPresenter(QObject):

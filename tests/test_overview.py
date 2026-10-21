@@ -1,19 +1,16 @@
 """Diff overview paints engine changes and reports aligned navigation rows."""
 
 import os
-from pathlib import Path
-import sys
 import unittest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PyQt5.QtCore import QPoint, Qt
 from PyQt5.QtTest import QSignalSpy, QTest
 from PyQt5.QtWidgets import QApplication
 
-from diff_engine import compare_texts, DiffOptions
-from overview import DiffOverview
+from easytextdiff.diff_engine import compare_texts, DiffOptions
+from easytextdiff.overview import DiffOverview
 
 
 class OverviewTests(unittest.TestCase):

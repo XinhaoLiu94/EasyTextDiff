@@ -4,13 +4,16 @@
 
 ## 准备开发环境
 
-推荐 Windows 和 Python 3.12，运行命令见 [README.md](README.md)。运行时依赖仅为 `requirements.txt` 中的 PyQt5；测试使用 Python 自带的 unittest。
+推荐 Windows 和 Python 3.12，创建虚拟环境的命令见 [README.md](README.md)。运行时依赖仅为 `requirements.txt` 中的 PyQt5；测试使用 Python 自带的 unittest。
 
-提交前运行：
+在所用虚拟环境中安装项目并运行测试：
 
 ```powershell
+python -m pip install -e .
 python -m unittest discover -s tests -v
 ```
+
+应用代码位于 `src/easytextdiff/`，包内沿用会话级 MVP 与应用服务分层。测试使用 `easytextdiff` 包导入，不在测试中添加 `sys.path` 路径补丁。入口为 `python -m easytextdiff` 或安装后的 `easytextdiff` GUI 命令；构建脚本位于 `scripts/build_windows.py`。
 
 修改对比或合并算法时，请覆盖真实的输入与输出，保留中文、Unicode、空行、末尾换行和插入 / 删除行映射的行为，不向原文加入对齐占位行。修改界面时，请在实际窗口检查浅色、深色、最小窗口尺寸与键盘操作。
 

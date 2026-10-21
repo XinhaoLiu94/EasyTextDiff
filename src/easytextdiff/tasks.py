@@ -3,7 +3,7 @@ from threading import Event
 
 from PyQt5.QtCore import QObject, QRunnable, QThreadPool, QTimer, pyqtSignal
 
-from diff_engine import compare_texts
+from .diff_engine import compare_texts
 
 
 class _JobSignals(QObject):

@@ -12,10 +12,13 @@ import subprocess
 import sys
 import tarfile
 
-from branding import APP_NAME, DISPLAY_NAME, VERSION
+PROJECT = Path(__file__).resolve().parents[1]
+SOURCE = PROJECT / "src"
+# Running this repository script does not require installing the application.
+sys.path.insert(0, str(SOURCE))
+from easytextdiff.branding import APP_NAME, DISPLAY_NAME, VERSION
 
 
-PROJECT = Path(__file__).resolve().parent
 BUILD_DEPS = PROJECT / ".build_deps"
 PACKAGING = PROJECT / ".packaging"
 OUTPUT = PROJECT / "dist"
@@ -35,6 +38,9 @@ def _verify_paths(output: Path = OUTPUT) -> None:
         raise RuntimeError("The build destination must not replace the source project.")
     if output.parent == output:
         raise RuntimeError("Choose an output directory below the filesystem root.")
+    for directory in ("src", "scripts", "tests", ".github", "docs", "assets"):
+        if output.is_relative_to(PROJECT / directory):
+            raise RuntimeError("The output directory must not be inside shipped source directories.")
 
 
 def _copy_dependency_notices(destination: Path) -> list[str]:
@@ -111,7 +117,7 @@ def _copy_application_source(destination: Path) -> None:
         if path.is_file() and (path.suffix.lower() in source_extensions
                                or path.name in source_names):
             shutil.copy2(path, destination / path.name)
-    for directory in ("tests", ".github", "docs", "assets"):
+    for directory in ("src", "scripts", "tests", ".github", "docs", "assets"):
         source = PROJECT / directory
         if source.is_dir() and not source.is_symlink():
             shutil.copytree(
@@ -128,7 +134,7 @@ def _source_ignore(directory: str, names: list[str]) -> set[str]:
     }
     return {
         name for name in names
-        if name in excluded or name.endswith((".pyc", ".pyo"))
+        if name in excluded or name.endswith((".pyc", ".pyo", ".egg-info", ".dist-info"))
         or (Path(directory) / name).is_symlink()
     }
 
@@ -160,7 +166,7 @@ def main(argv=None) -> int:
     output = Path(os.path.abspath(args.output.expanduser()))
     portable = output / APP_NAME
     _verify_paths(output)
-    application = PROJECT / "app.py"
+    application = SOURCE / "easytextdiff" / "__main__.py"
     if not application.is_file():
         raise RuntimeError(f"Application source is not ready: {application}")
     environment = _build_environment()
@@ -172,9 +178,9 @@ def main(argv=None) -> int:
         "--distpath", str(output),
         "--workpath", str(PACKAGING / "work"),
         "--specpath", str(PACKAGING / "spec"),
-        "--paths", str(PROJECT),
+        "--paths", str(SOURCE),
     ]
-    icon = PROJECT / "app.ico"
+    icon = PROJECT / "assets" / "app.ico"
     if icon.is_file():
         command += ["--icon", str(icon)]
     command.append(str(application))

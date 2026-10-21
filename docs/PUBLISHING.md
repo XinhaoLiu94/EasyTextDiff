@@ -26,13 +26,13 @@ git push -u origin main
 
 ## 检查自动测试
 
-第一次推送后，在 GitHub 的 Actions 页面确认 `Tests` 工作流通过。该工作流运行 Windows / Python 3.12 下的 unittest，仓库配置只申请内容读取权限。
+第一次推送后，在 GitHub 的 Actions 页面确认 `Tests` 工作流通过。该工作流先通过 `pip install -e .` 安装项目，再运行 Windows / Python 3.12 下的 unittest，仓库配置只申请内容读取权限。
 
 ## 发布 Windows 便携版
 
-1. 按 [PACKAGING.txt](../PACKAGING.txt) 在 Windows 上构建。
+1. 按 [PACKAGING.txt](../PACKAGING.txt) 安装项目与构建依赖，在 Windows 上执行 `python scripts/build_windows.py`。
 2. 验证 `dist/EasyTextDiff/EasyTextDiff.exe` 启动、粘贴比较、文件导入、明暗切换和报告导出。
 3. 将完整的 `dist/EasyTextDiff` 文件夹压缩为 ZIP。保留 `_internal`、应用源码与依赖说明，不要只上传 EXE。
-4. 在确认测试与实际窗口检查完成后，将 [更新记录](../CHANGELOG.md) 中相应版本的“待发布”改为发布日期，提交并创建与应用版本一致的标签（当前为 `v1.2.2`）与 GitHub Release，再附上便携包。
+4. 在确认测试与实际窗口检查完成后，将 [更新记录](../CHANGELOG.md) 中相应版本的“待发布”改为发布日期，提交并创建与应用版本一致的标签（当前为 `v1.2.3`）与 GitHub Release，再附上便携包。
 
 源码仓库只提交项目源文件与文档；构建目录、下载缓存和便携版二进制通过 `.gitignore` 排除。较大的便携包放在 Release 附件中。

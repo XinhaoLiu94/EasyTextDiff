@@ -6,9 +6,11 @@
 
 从 1.1 开始采用**会话级 MVP 加应用服务分层**；1.2 在同一职责边界内将输入和差异显示统一为始终可编辑的原文栏。每个比较标签由一份模型、一个 View 和一个 Presenter 组成。主窗口作为应用外壳管理标签和全局外观，入口装配应用。这里的 MVP 是应用自身的职责划分；它不等同于 Qt 的 QAbstractItemModel / item-view 体系。
 
+1.2.3 将应用模块集中到 `src/easytextdiff/` 包内，构建脚本放入 `scripts/`，图标资源放入 `assets/`。这次源码组织调整保留既有 MVP 和服务边界。
+
 ```mermaid
 flowchart TD
-    Entry[app.py 入口] --> Shell[MainWindow 标签与公共菜单]
+    Entry[__main__.py / app.py 入口] --> Shell[MainWindow 标签与公共菜单]
     Shell --> Presenter[每个标签的 SessionPresenter]
     Shell --> View[SessionView 与 TextPane]
     View -- 用户意图信号 --> Presenter
@@ -22,9 +24,11 @@ flowchart TD
 
 ## 模块边界
 
+下表中的 Python 应用模块均位于 `src/easytextdiff/`。
+
 | 模块 | 职责 | 不承担的工作 |
 | --- | --- | --- |
-| app.py | 命令行入口、QApplication 初始化 | 文档操作和比较业务 |
+| __init__.py / __main__.py / app.py | 包初始化、模块启动入口、QApplication 初始化与装配 | 文档操作和比较业务 |
 | branding.py / preferences.py | 统一应用身份、偏好读取与一次性迁移 | 文档内容、文件比较与界面布局 |
 | main_window.py | 标签生命周期、全局菜单、主题、窗口偏好 | 解码、写文件、差异算法 |
 | session_view.py / widgets.py | 创建控件、显示状态、发出操作意图、滚动和查找 | 读取或保存文件、启动比较任务 |
@@ -37,7 +41,9 @@ flowchart TD
 | dialogs.py | 文件选择、保存格式、确认和错误展示 | 修改文档基线或写文件 |
 | reports.py | 生成转义后的 HTML 文本 | 选择路径和写文件 |
 
-暂时保留平坦的 Python 模块结构，避免为少量类增加包层级。新增功能按职责进入相应模块；不再把文件服务或对比业务放回主窗口。
+`pyproject.toml` 定义应用包、依赖和 `easytextdiff` GUI 启动命令；`python -m easytextdiff` 通过 `__main__.py` 启动。开发环境先执行 `pip install -e .`，应用与测试都使用正常包导入，无需修改 `sys.path`。
+
+包内保留按职责拆分的模块，新增功能进入相应模块；不把文件服务或对比业务放回主窗口。`scripts/build_windows.py` 只负责 Windows 便携版构建，`assets/app.ico` 提供打包图标，不参与会话业务。
 
 ## 两种修改状态
 

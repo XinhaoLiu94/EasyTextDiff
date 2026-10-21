@@ -20,7 +20,7 @@ from PyQt5.QtGui import (
 )
 from PyQt5.QtWidgets import QFrame, QPlainTextEdit, QTextEdit, QWidget
 
-from highlighting import SyntaxHighlighter, canonical_language, detect_language
+from .highlighting import SyntaxHighlighter, canonical_language, detect_language
 
 
 DEFAULT_COLORS = {

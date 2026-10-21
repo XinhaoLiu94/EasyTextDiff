@@ -3,22 +3,20 @@
 import codecs
 import os
 from pathlib import Path
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PyQt5.QtCore import QEvent, QSettings
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QApplication
 
-from dialogs import SaveChoice
-from file_service import FileServiceError
-from main_window import MainWindow
-from models import Newline
+from easytextdiff.dialogs import SaveChoice
+from easytextdiff.file_service import FileServiceError
+from easytextdiff.main_window import MainWindow
+from easytextdiff.models import Newline
 
 
 class FakeDialogs:
@@ -166,7 +164,7 @@ class PresenterFileTests(unittest.TestCase):
         path = self.write("source.txt", b"baseline\n")
         document = self.import_left(path)
         self.edit_left("pending edit\n")
-        with patch("presenter.save_document", side_effect=FileServiceError("disk unavailable")):
+        with patch("easytextdiff.presenter.save_document", side_effect=FileServiceError("disk unavailable")):
             self.assertFalse(self.presenter.save("left"))
         self.assertEqual(path.read_bytes(), b"baseline\n")
         self.assertEqual(document._saved_text, "baseline\n")

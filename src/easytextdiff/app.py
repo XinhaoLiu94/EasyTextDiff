@@ -6,9 +6,9 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
 
-from icons import app_icon
-from branding import APP_NAME, DISPLAY_NAME
-from main_window import MainWindow, VERSION
+from .branding import APP_NAME, DISPLAY_NAME, VERSION
+from .icons import app_icon
+from .main_window import MainWindow
 
 
 def create_application(argv=None):

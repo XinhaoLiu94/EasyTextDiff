@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import (
     QPushButton, QVBoxLayout, QWidget,
 )
 
-from icons import icon
-from overview import DiffOverview
-from widgets import TextPane, tool_button
+from .icons import icon
+from .overview import DiffOverview
+from .widgets import TextPane, tool_button
 
 
 class SessionView(QWidget):

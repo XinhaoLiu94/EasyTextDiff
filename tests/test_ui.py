@@ -1,18 +1,16 @@
 """MVP integration checks; launch with QT_QPA_PLATFORM=offscreen."""
-import sys
 import tempfile
 import unittest
 from html import escape
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from PyQt5.QtCore import QCoreApplication, QEvent, QEventLoop, QSettings, QTimer, Qt
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtTest import QSignalSpy, QTest
 from PyQt5.QtWidgets import QApplication
-from app import create_application
-from main_window import MainWindow
-from reports import html_report
+from easytextdiff.app import create_application
+from easytextdiff.main_window import MainWindow
+from easytextdiff.reports import html_report
 
 
 class FakeDialogs:

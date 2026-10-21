@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easytextdiff"
+dynamic = ["version"]
+description = "A paste-first desktop text diff tool with editable source panes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE.txt"]
+dependencies = ["PyQt5>=5.15,<5.16"]
+
+[project.gui-scripts]
+easytextdiff = "easytextdiff.app:main"
+
+[project.urls]
+Repository = "https://github.com/XinhaoLiu94/EasyTextDiff"
+Issues = "https://github.com/XinhaoLiu94/EasyTextDiff/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "easytextdiff.branding.VERSION"}

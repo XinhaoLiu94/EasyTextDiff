@@ -1,6 +1,6 @@
 # 轻松文本对比 EasyTextDiff
 
-轻松文本对比 EasyTextDiff 1.2.2 是一个默认粘贴输入的本地文本对比工具。左右两栏始终可以编辑，差异直接显示在原文中，适合快速比较代码、TXT 和 Markdown。
+轻松文本对比 EasyTextDiff 1.2.3 是一个默认粘贴输入的本地文本对比工具。左右两栏始终可以编辑，差异直接显示在原文中，适合快速比较代码、TXT 和 Markdown。
 
 A paste-first desktop text diff tool built with PyQt5. Edit both source panes directly while viewing live line and inline change highlights, with all text processed locally.
 
@@ -42,11 +42,11 @@ A paste-first desktop text diff tool built with PyQt5. Edit both source panes di
 git clone https://github.com/XinhaoLiu94/EasyTextDiff.git
 cd EasyTextDiff
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe app.py
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe -m easytextdiff
 ```
 
-也可以用 `python app.py --demo` 查看示例，或用 `python app.py left.txt right.txt` 打开两个文件。
+安装项目后，在同一 Python 环境中可用 `python -m easytextdiff --demo` 查看示例，或用 `python -m easytextdiff left.txt right.txt` 打开两个文件。安装还会提供 GUI 启动命令 `easytextdiff`；虚拟环境未激活时可运行 `.\.venv\Scripts\easytextdiff.exe`。
 
 ## 快捷键
 
@@ -88,7 +88,7 @@ python -m venv .venv
 
 自动化环境可设置 `QT_QPA_PLATFORM=offscreen`。Windows 离屏平台可能没有可用字体，不能用离屏截图代替实际窗口的视觉检查。
 
-仓库包含 Windows 自动测试配置。修改界面后还应检查实际窗口的浅色、深色和最小尺寸布局。贡献步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)，构建命令见 [PACKAGING.txt](PACKAGING.txt)。
+仓库包含 Windows 自动测试配置：先执行 `pip install -e .` 安装项目，再运行 unittest。测试通过正常包导入访问 `easytextdiff`，无需修改 `sys.path`。修改界面后还应检查实际窗口的浅色、深色和最小尺寸布局。贡献步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)，构建命令见 [PACKAGING.txt](PACKAGING.txt)。
 
 维护者首次建立仓库时可参考 [发布步骤](docs/PUBLISHING.md)。版本变更见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -97,26 +97,37 @@ python -m venv .venv
 ## 项目结构
 
 ```text
-app.py              应用入口与装配
-branding.py         统一名称与版本
-preferences.py      用户偏好与旧版设置迁移
-main_window.py      标签、公共菜单与主题
-presenter.py        会话交互与操作协调
-session_view.py     单个比较标签的界面
-models.py           文档、格式与保存基线
-file_service.py     解码、格式保留与原子保存
-tasks.py            比较任务、防抖与版本控制
-diff_engine.py      独立的对比、差异块合并与补丁导出
-editor.py           原文编辑、原始行号、差异装饰和定位
-highlighting.py     代码语法高亮
-overview.py         差异概览
-dialogs.py          保存格式与确认弹窗
-widgets.py          双栏编辑面板
-styles.py           浅色与深色样式
-icons.py            SVG 图标
-reports.py          HTML 报告
-tests/              算法、编辑器和界面集成测试
-build_windows.py    Windows 便携版构建
+pyproject.toml          包配置、依赖与 GUI 启动入口
+src/easytextdiff/       应用包
+  __init__.py          包初始化
+  __main__.py          python -m easytextdiff 入口
+  app.py               应用初始化与装配
+  branding.py          统一名称与版本
+  preferences.py       用户偏好与旧版设置迁移
+  main_window.py       标签、公共菜单与主题
+  presenter.py         会话交互与操作协调
+  session_view.py      单个比较标签的界面
+  models.py            文档、格式与保存基线
+  file_service.py      解码、格式保留与原子保存
+  tasks.py             比较任务、防抖与版本控制
+  diff_engine.py       对比、差异块合并与补丁导出
+  editor.py            原文编辑、行号、差异装饰和定位
+  highlighting.py      代码语法高亮
+  overview.py          差异概览
+  dialogs.py           保存格式与确认弹窗
+  widgets.py           双栏编辑面板
+  styles.py            浅色与深色样式
+  icons.py             SVG 图标
+  reports.py           HTML 报告
+  examples.py          内置示例文本
+scripts/
+  build_windows.py     Windows 便携版构建
+assets/
+  app.ico              Windows 应用图标
+tests/                  算法、编辑器和界面集成测试
+docs/                   架构、发布说明与截图
+requirements.txt        运行时依赖规格
+requirements-build.txt  构建工具版本
 ```
 
 ## 许可与来源

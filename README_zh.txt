@@ -1,4 +1,4 @@
-轻松文本对比 EasyTextDiff 1.2.2
+轻松文本对比 EasyTextDiff 1.2.3
 
 项目仓库：https://github.com/XinhaoLiu94/EasyTextDiff
 
@@ -9,7 +9,8 @@
 运行
 1. 解压完整的 EasyTextDiff 文件夹，双击 EasyTextDiff.exe。
 2. 请保留 _internal 文件夹，复制程序时复制整个 EasyTextDiff 文件夹。
-3. 便携版无需另装 Python。源码运行：安装 requirements.txt 后运行 app.py。
+3. 便携版无需另装 Python。源码运行：在项目目录执行 python -m pip install -e .，
+   然后运行 python -m easytextdiff；安装后的 GUI 命令为 easytextdiff。
 
 使用
 • 左右两栏直接输入，或点击粘贴按钮从剪贴板填入整段文字。
@@ -44,12 +45,14 @@ GB18030，以及 LF、CRLF、CR。混合换行在未编辑时保留原字节，�
 这是独立的 PyQt5 实现，参考双栏对比工作方式，未包含 WinMerge 源码。
 应用源码采用 GPL-3.0-or-later，全文见 LICENSE.txt。
 便携包包含 source 目录与 third_party 依赖许可、版本和来源说明。
-若使用 GitHub 源码，请从项目根目录的 app.py 启动，完整说明见 README.md。
+若使用 GitHub 源码，应用模块位于 src/easytextdiff/；先安装项目，再以
+python -m easytextdiff 启动，完整说明见 README.md。
 
 开发与验证
-Python 3.12 / PyQt5 5.15。运行 app.py --demo 可查看内置示例。
+Python 3.12 / PyQt5 5.15。运行 python -m easytextdiff --demo 可查看内置示例。
+开发环境先执行 python -m pip install -e .；测试通过正常的 easytextdiff 包导入运行。
 测试：python -m unittest discover -s tests -v
 可设置 QT_QPA_PLATFORM=offscreen 进行自动化测试。
 Windows 的 offscreen 平台可能没有可用字体，视觉检查请使用实际窗口。
-构建说明见 PACKAGING.txt。
+构建入口为 python scripts/build_windows.py，依赖安装与完整说明见 PACKAGING.txt。
 架构采用会话级 MVP 与应用服务分层，详细边界见 docs/ARCHITECTURE.md。

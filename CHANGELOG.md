@@ -1,5 +1,12 @@
 # 更新记录
 
+## 1.2.3 待发布
+
+- 应用模块整理为 `src/easytextdiff/` 包，保留会话级 MVP 与应用服务分层。
+- 支持安装后使用 `python -m easytextdiff` 或 `easytextdiff` GUI 命令启动。
+- Windows 构建脚本移至 `scripts/build_windows.py`，图标移至 `assets/app.ico`。
+- 开发与 CI 先安装项目，再通过正常包导入运行测试。
+
 ## 1.2.2 待发布
 - 移除编辑区上方的宣传标题与说明，将操作按钮并入对比选项栏，增加文本区域的可用高度。
 

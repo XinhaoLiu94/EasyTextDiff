@@ -1,19 +1,16 @@
 """Deterministic coordinator checks using gated workers and a local pool."""
 
 import os
-from pathlib import Path
-import sys
 from threading import Event
 import unittest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PyQt5.QtCore import QEvent, QEventLoop, QThreadPool, QTimer
 from PyQt5.QtWidgets import QApplication
 
-from diff_engine import DiffOptions
-from tasks import CompareCoordinator
+from easytextdiff.diff_engine import DiffOptions
+from easytextdiff.tasks import CompareCoordinator
 
 
 class CompareCoordinatorTests(unittest.TestCase):

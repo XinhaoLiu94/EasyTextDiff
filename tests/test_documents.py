@@ -1,16 +1,14 @@
 import codecs
 from pathlib import Path
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from file_service import (BinaryFileError, ExternalModificationError,
+from easytextdiff.file_service import (BinaryFileError, ExternalModificationError,
                           FileServiceError, FileTooLargeError,
                           UnsupportedEncodingError, read_document, save_document)
-from models import ComparisonModel, DocumentModel, Newline
+from easytextdiff.models import ComparisonModel, DocumentModel, Newline
 
 
 class DocumentModelTests(unittest.TestCase):
@@ -161,7 +159,7 @@ class DocumentFileTests(unittest.TestCase):
         document.text = "edited\n"
         before = (document.path, document.encoding, document.newline, document.bom,
                   document._saved_text, document._saved_format, document._original_bytes)
-        with patch("file_service.os.replace", side_effect=OSError("destination locked")):
+        with patch("easytextdiff.file_service.os.replace", side_effect=OSError("destination locked")):
             with self.assertRaises(FileServiceError):
                 save_document(document, target, encoding="utf-8-sig", newline=Newline.LF)
         self.assertEqual(source.read_bytes(), b"baseline\r\n")

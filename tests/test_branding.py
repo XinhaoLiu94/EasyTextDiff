@@ -1,17 +1,15 @@
 """Brand identity and isolated, one-time migration of legacy preferences."""
 
 from pathlib import Path
-import sys
 import tempfile
 import unittest
 from unittest.mock import call, patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PyQt5.QtCore import QByteArray, QSettings
 
-from branding import APP_NAME, DISPLAY_NAME, VERSION
-from preferences import load_settings
+from easytextdiff.branding import APP_NAME, DISPLAY_NAME, VERSION
+from easytextdiff.preferences import load_settings
 
 
 class BrandingTests(unittest.TestCase):
@@ -29,7 +27,7 @@ class BrandingTests(unittest.TestCase):
     def test_public_identity(self):
         self.assertEqual(APP_NAME, "EasyTextDiff")
         self.assertEqual(DISPLAY_NAME, "轻松文本对比")
-        self.assertEqual(VERSION, "1.2.2")
+        self.assertEqual(VERSION, "1.2.3")
 
     def test_missing_preferences_migrate_without_changing_legacy(self):
         geometry = QByteArray(b"window-geometry")
@@ -83,7 +81,7 @@ class BrandingTests(unittest.TestCase):
 
     def test_default_namespaces_use_new_identity_and_read_old_identity(self):
         # Patch construction itself: this test never touches the Windows registry.
-        with patch("preferences.QSettings", side_effect=[self.destination, self.legacy]) as factory:
+        with patch("easytextdiff.preferences.QSettings", side_effect=[self.destination, self.legacy]) as factory:
             result = load_settings()
         self.assertIs(result, self.destination)
         self.assertEqual(factory.call_args_list, [call("EasyTextDiff", "EasyTextDiff"),
