@@ -152,7 +152,7 @@ class PresenterFileTests(unittest.TestCase):
         self.assertTrue(self.presenter.save("left"))
         self.assertEqual(path.read_bytes(), codecs.BOM_UTF16_BE + "甲\r\n修改后\r\n".encode("utf-16-be"))
         self.assertIs(self.presenter.document("left"), document)
-        self.assertEqual(document.path, path)
+        self.assertEqual(document.path, path.resolve())
         self.assertEqual(document.encoding, "utf-16-be")
         self.assertEqual(document.newline, Newline.CRLF)
         self.assertEqual(document.bom, codecs.BOM_UTF16_BE)
@@ -251,7 +251,7 @@ class PresenterFileTests(unittest.TestCase):
         self.dialogs.save_choice = SaveChoice(str(target), "utf-8-sig", "\r\n")
         self.dialogs.allow_overwrite = False
         self.assertFalse(self.presenter.save("left", save_as=True))
-        self.assertEqual(document.path, source)
+        self.assertEqual(document.path, source.resolve())
         self.assertEqual(document.bom, b"")
         self.assertEqual(document.newline, Newline.LF)
         self.assertEqual(source.read_bytes(), b"source\n")

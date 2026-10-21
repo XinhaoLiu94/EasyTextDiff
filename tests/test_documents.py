@@ -139,7 +139,7 @@ class DocumentFileTests(unittest.TestCase):
         self.assertEqual(document.encoding, "utf-8")
         self.assertEqual(document.bom, codecs.BOM_UTF8)
         self.assertEqual(document.newline, Newline.CRLF)
-        self.assertEqual(document.path, path)
+        self.assertEqual(document.path, path.resolve())
         self.assertFalse(document.modified)
         save_document(document, encoding="utf-8")
         self.assertEqual(path.read_bytes(), "中文\r\nnext\r\n".encode("utf-8"))
