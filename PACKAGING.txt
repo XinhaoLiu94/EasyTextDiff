@@ -1,0 +1,56 @@
+EasyTextDiff 1.2.1 Windows portable build
+
+Clean-clone build (Windows, Python 3.12 recommended)
+
+Use a virtual environment to keep build dependencies separate:
+
+  python -m venv .venv
+  .venv\Scripts\python -m pip install -r requirements.txt -r requirements-build.txt
+  .venv\Scripts\python build_windows.py
+
+The build script uses PyInstaller installed in the active Python environment.
+requirements-build.txt pins the build tools used for the portable release.
+requirements.txt declares the runtime dependency PyQt5>=5.15,<5.16. Matching
+Python and resolved runtime dependency versions gives a comparable build;
+this process does not promise byte-for-byte identical executables.
+
+Optional isolated build tools
+
+If the active Python already has PyQt5, PyInstaller can instead be installed
+into the project without modifying that Python environment:
+
+  python -m pip install -r requirements-build.txt --target .build_deps --cache-dir .build_cache
+  python build_windows.py
+
+The script falls back to .build_deps only when the active environment does not
+provide PyInstaller. It does not install or upgrade any packages itself.
+
+Output and source
+
+The result is dist/EasyTextDiff/EasyTextDiff.exe inside the repository. Keep the entire EasyTextDiff folder
+together, including _internal. The executable has no console window. app.ico,
+when present beside app.py, becomes the executable icon. Rebuilding replaces
+the EasyTextDiff folder at that fixed location; other output folders are untouched.
+
+When an older portable build is running, build into a different output directory
+instead of replacing its open executable. For example:
+
+  python build_windows.py --output ..\output\EasyTextDiff-v1.2.2
+
+This produces ..\output\EasyTextDiff-v1.2.2\EasyTextDiff\EasyTextDiff.exe. The output must
+not be a symlink, a filesystem root, or a directory that replaces this source
+project. Existing files in the chosen output's EasyTextDiff child may be replaced.
+
+The portable folder includes application source, repository documentation,
+license files, build requirements, tests, and available .github/docs/assets
+directories. Caches, compiled Python files, build scratch, and symlinks are
+excluded from copied directories. Python and dependency license notices,
+package versions, and upstream source locations are included in third_party.
+
+A preexisting PyQt5 source archive under .packaging/third_party_sources is
+included when available. It is optional: a clean-clone build requires no such
+archive and performs no network downloads. The checked-in GPLv3 text supplies
+the PyQt5 license when its installed wheel does not contain a copy.
+
+Build scratch files remain in .packaging. Build tools, download caches, and
+scratch folders do not belong in the portable application folder.

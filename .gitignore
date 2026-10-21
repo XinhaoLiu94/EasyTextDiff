@@ -1,0 +1,29 @@
+# Python and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local build dependencies, downloads and generated output
+.build_deps/
+.build_cache/
+.packaging/
+.qa/
+build/
+dist/
+output/
+*.spec
+*.log
+
+# Local settings and IDE files
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
